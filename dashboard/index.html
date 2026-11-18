@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unminted — Token Launch Radar</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="mast">
+  <svg class="rings" width="340" height="150" viewBox="0 0 340 150" aria-hidden="true">
+    <g fill="none" stroke="#1d7a4a" stroke-width="1">
+      <circle cx="290" cy="75" r="18"/><circle cx="290" cy="75" r="34"/><circle cx="290" cy="75" r="50"/>
+      <circle cx="290" cy="75" r="66"/><circle cx="290" cy="75" r="82"/><circle cx="290" cy="75" r="98"/>
+      <line x1="192" y1="75" x2="388" y2="75"/><line x1="290" y1="-23" x2="290" y2="173"/>
+    </g>
+    <path d="M290 75 L290 -23 A98 98 0 0 1 359 141 Z" fill="#3dff8e" opacity="0.10"/>
+    <g fill="#3dff8e">
+      <circle cx="262" cy="48" r="2.5"/><circle cx="318" cy="102" r="2.5"/><circle cx="276" cy="118" r="2"/>
+      <circle cx="330" cy="40" r="2"/><circle cx="244" cy="88" r="2"/>
+    </g>
+    <circle cx="290" cy="75" r="3" fill="#ffb224"/>
+  </svg>
+  <div class="mast-row">
+    <div>
+      <h1><span class="dot"></span>UNMINTED</h1>
+      <p class="tag">Token Launch Radar — pre-token protocols priced off traded comps, each with a costed farm plan.</p>
+    </div>
+    <div class="mast-stats" id="mastStats"></div>
+  </div>
+  <div class="method" id="methodStrip"></div>
+</header>
+
+<main id="boardView">
+ <div class="boardflex">
+  <div class="boardcol">
+  <section class="controls">
+    <input type="search" id="q" placeholder="Search protocol or slug…" aria-label="Search">
+    <select id="catSel" aria-label="Category"></select>
+    <select id="chainSel" aria-label="Chain"></select>
+    <select id="verdictSel" aria-label="Verdict">
+      <option value="">All verdicts</option>
+      <option value="FARM">FARM</option>
+      <option value="THIN">THIN</option>
+      <option value="SKIP">SKIP</option>
+    </select>
+    <label class="toggle"><input type="checkbox" id="watchOnly"> Watchlist only</label>
+    <span class="count" id="rowCount"></span>
+  </section>
+  <div class="tablewrap">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-key="rank">Rank</th>
+          <th data-key="name">Protocol</th>
+          <th data-key="implied_value_usd" class="num">Implied value</th>
+          <th data-key="rank_high" class="num">Rank range</th>
+          <th data-key="tvl_usd" class="num">TVL</th>
+          <th data-key="change_7d" class="num">7d %</th>
+          <th data-key="age_years" class="num">Age</th>
+          <th data-key="category">Category</th>
+          <th data-key="verdict">Verdict</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="foot">Implied value = predicted FDV from the comps curve &times; launch share &times; age factor &times; momentum factor. Rank range is the 10th–90th percentile across 200 bootstrap refits of the comps fit. Click any row for its model breakdown and full farm plan. Protocols are described as recording no token in the snapshot — that is DefiLlama's record, not proof none exists.</p>
+  </div>
+  <aside class="rail">
+    <div class="panel">
+      <h3>THE COMPS CURVE</h3>
+      <p class="pnote">Each dot is a traded comp: its real mcap/TVL multiple against its TVL. The line is the fitted size curve before category adjustments — the board is priced off it.</p>
+      <div id="chart"></div>
+    </div>
+    <div class="panel">
+      <h3>VERDICT MIX</h3>
+      <div id="mix"></div>
+    </div>
+    <div class="panel">
+      <h3>HOW TO READ A ROW</h3>
+      <p class="pnote"><b>Implied value</b> is the slice of a launch's predicted value that reaches farmers and the community — not the whole FDV. <b>Rank range</b> is where the row lands across 200 refits: a narrow range is a sturdy rank, a wide one is a coin toss. <b>Verdict</b> nets the implied value density against the plan's own 3-month cost: FARM it, farm it THIN (small size only), or SKIP it.</p>
+    </div>
+  </aside>
+ </div>
+</main>
+
+<main id="detailView" hidden>
+  <button class="back" id="backBtn">&larr; Back to the board</button>
+  <div id="detailBody"></div>
+</main>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
